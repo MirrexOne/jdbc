@@ -23,6 +23,25 @@ public class Application {
                 statement2.executeUpdate(query);
             }
 
+            String addFilms = "INSERT INTO films (title, release_year, duration) VALUES (?, ?, ?)";
+            try (var ps = conn.prepareStatement(addFilms)) {
+                ps.setString(1, "LOTR");
+                ps.setInt(2, 2000);
+                ps.setInt(3, 225);
+                ps.executeUpdate();
+
+                ps.setString(1, "Guards");
+                ps.setInt(2, 2007);
+                ps.setInt(3, 134);
+                ps.executeUpdate();
+            }
+
+            String deleteFilms = "DELETE FROM films WHERE title = ? ";
+            try (var ps = conn.prepareStatement(deleteFilms)) {
+                ps.setString(1, "Guards");
+                ps.executeUpdate();
+            }
+
             var dataSelection = "SELECT * FROM films";
             try (var statement3 = conn.createStatement()) {
                 var resultSet = statement3.executeQuery(dataSelection);
